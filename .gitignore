@@ -1,0 +1,6 @@
+
+*.json
+*.wav
+*png
+
+*.ipynb_checkpoints

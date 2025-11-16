@@ -26,7 +26,6 @@ This pipeline processes participant audio recordings from tapping experiments an
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd notebook
 ```
 
 2. Install dependencies:

@@ -24,12 +24,12 @@ parameters = {  # Global parameters for sms experiments
     'MARKERS_DURATION': 15,
     'MARKERS_IOI': [0, 280, 230],
     'MARKERS_BEGINNING': 1500.0,
-    'STIM_BEGINNING': 3000.0,       # changed
-    'MARKERS_END': 3000.0,          # changed from 2000 to 3000 on 28 feb
-    'MARKERS_END_SLACK': 6000.0,    # changed from 5000 to 6000 on 28 feb
+    'STIM_BEGINNING': 3000.0,       
+    'MARKERS_END': 3000.0,          
+    'MARKERS_END_SLACK': 6000.0,    
     # failing criteria
-    'MIN_RAW_TAPS': 5,              # changed
-    'MAX_RAW_TAPS': 250,            # changed
+    'MIN_RAW_TAPS': 5,              
+    'MAX_RAW_TAPS': 250,            
     'MARKERS_MAX_ERROR': 15,
     'MIN_NUM_ASYNC': -1,     # 2
     'MIN_SD_ASYNC': 0,     # 10
@@ -56,7 +56,7 @@ parameters = {  # Global parameters for sms experiments
     'ONSET_MATCHING_WINDOW_PHASE': [-1, 1],  # for relative phase (if you want to use only ms set it to [-1 1])
     'MARKERS_MATCHING_WINDOW': 35.0,
     # Plotting
-    'DISPLAY_PLOTS': True, # TODO BRING THIS BACK
+    'DISPLAY_PLOTS': True,
     'PLOTS_TO_DISPLAY': [3, 4]
     }
 

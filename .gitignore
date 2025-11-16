@@ -1,6 +1,9 @@
 
-*.json
 *.wav
 *png
 
 *.ipynb_checkpoints
+
+
+sms_tapping.ipynb
+beat_finding_bkp.ipynb

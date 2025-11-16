@@ -1,0 +1,15 @@
+{
+    "stim_duration": 63.0,
+    "stim_onsets": [],
+    "stim_shifted_onsets": [],
+    "onset_is_played": [],
+    "markers_onsets": [
+        1500.0,
+        1780.0,
+        2010.0,
+        60000.0,
+        60280.0,
+        60510.0
+    ],
+    "stim_name": "stim_T1_R2"
+}

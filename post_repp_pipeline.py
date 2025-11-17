@@ -272,6 +272,8 @@ def run_repp_analysis_for_participant(
         plot_path = os.path.join(output_participant_dir, plot_filename)
         stim_info_path = os.path.join(output_participant_dir, stim_info_fname)
         
+        title_plot = recording_basename.replace("__trial_main_page", "")
+        
         # Load stimulus info
         with open(stim_info_path, 'r') as f:
             stim_info = json.load(f)

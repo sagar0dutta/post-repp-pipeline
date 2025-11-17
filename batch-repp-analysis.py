@@ -84,7 +84,6 @@ for choose_participant_id in participant_ids:
 
 
     # Run REPP analysis for all recordings
-    title = audio_stim_pairs[0][0].replace("__trial_main_page", "")
     results = run_repp_analysis_for_participant(
         audio_stim_pairs,
         output_participant_dir,

@@ -54,6 +54,10 @@ pip install pandas numpy soundfile librosa matplotlib repp
      - Generate visualization plots
 
 
+## Batch Process Participants
+
+**See batch-repp-analysis.py**
+
 ## Project Structure
 
 ```

@@ -168,7 +168,7 @@ def setup_participant_directories(
         base_dir, "assets", choose_sub_dir, "participants", 
         f"participant_{choose_participant_id}"
     )
-    output_participant_dir = os.path.join(output_dir, f"participant_{choose_participant_id}")
+    output_participant_dir = os.path.join(output_dir, choose_sub_dir, f"participant_{choose_participant_id}")
     
     if not os.path.exists(participant_dir):
         raise ValueError(
@@ -183,6 +183,7 @@ def setup_participant_directories(
 
 
 def process_participant_audio_files(
+    participant_id: int,
     participant_dir: str,
     output_participant_dir: str,
     TapTrialMusic_df: pd.DataFrame,
@@ -209,23 +210,27 @@ def process_participant_audio_files(
         trial_id = extract_trial_id_from_filename(audio_fname)
         
         audio_path = os.path.join(participant_dir, audio_fname)
-        output_audio_path = os.path.join(output_participant_dir, audio_fname)
+        output_audio_path = os.path.join(output_participant_dir, f"participant_{participant_id}__{audio_fname}")
+        stim_info_json_path = os.path.join(output_participant_dir, f"participant_{participant_id}__{audio_basename}_stim_info.json")
+        plot_path = os.path.join(output_participant_dir, f"participant_{participant_id}__{audio_basename}.png")
+        
+        # check if stim_info and output_audio_path file already exists
+        if not overwrite and os.path.exists(stim_info_json_path) and os.path.exists(output_audio_path) and os.path.exists(plot_path):
+            continue
+        
         
         # Convert and save WAV file
         convert_and_save_audio(audio_path, output_audio_path, overwrite=overwrite)
         
         # Extract and save stimulus info
         stim_info = load_stim_info_from_csv(trial_id, TapTrialMusic_df)
-        stim_info_json_path = os.path.join(
-            output_participant_dir, f"{audio_basename}_stim_info.json"
-        )
         
         if overwrite or not os.path.exists(stim_info_json_path):
             with open(stim_info_json_path, 'w') as f:
                 json.dump(stim_info, f, indent=4)
             # print(f"stim_info saved: {audio_basename}_stim_info.json")
         
-        audio_stim_tup = (audio_basename, audio_fname, f"{audio_basename}_stim_info.json")
+        audio_stim_tup = (f"participant_{participant_id}__{audio_basename}", f"participant_{participant_id}__{audio_fname}", f"participant_{participant_id}__{audio_basename}_stim_info.json")
         audio_stim_pairs.append(audio_stim_tup)
     
     print(f"WAV files converted and saved to {output_participant_dir}")
@@ -282,9 +287,9 @@ def run_repp_analysis_for_participant(
             config=config
         )
         
-        print("extracted onsets:-----------------------------\n")
-        print(extracted_onsets)
-        print("-------------------------------------------------\n")
+        # print("extracted onsets:-----------------------------\n")
+        # print(extracted_onsets)
+        # print("-------------------------------------------------\n")
         
         # Display plot if requested
         if display_plots:

@@ -809,6 +809,24 @@ def do_plot_beat_detection(title_plot, audio_signals, aligned_onsets, analysis, 
         markers_detected = np.array([])
         markers_aligned = np.array([])
         tapping_iois = np.array([])
+        
+    # Downsample data to avoid triggering the _ArrayMemoryError --- updated on Nov 17 2025
+    # step_limit = 200_000  # adjust cap to avoid error
+    # if len(tt) > step_limit:
+    #     step = max(1, len(tt) // step_limit)
+    #     tt = tt[::step].astype(np.float32, copy=False)
+    #     rec_downsampled = rec_downsampled[::step].astype(np.float32, copy=False)
+    #     R_clean = R_clean[::step].astype(np.float32, copy=False)
+    #     tap_onsets = tap_onsets[::step]
+    #     tapping_onsets_aligned = tapping_onsets_aligned[::step]
+    #     markers_detected = markers_detected[::step]
+    #     markers_aligned = markers_aligned[::step]
+    # else:
+    #     tt = tt.astype(np.float32, copy=False)
+    #     rec_downsampled = rec_downsampled.astype(np.float32, copy=False)
+    #     R_clean = R_clean.astype(np.float32, copy=False)    
+        
+        
     
     # Check if we have any data to plot
     if len(tt) == 0:

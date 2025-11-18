@@ -4,9 +4,11 @@
 *.json
 *.wav
 *png
+*.pkl
 
 *.ipynb_checkpoints
-
+*.pyc
 
 sms_tapping.ipynb
 beat_finding_bkp.ipynb
+post_repp_testing.ipynb

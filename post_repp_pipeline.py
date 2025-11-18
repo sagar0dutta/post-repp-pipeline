@@ -5,7 +5,7 @@ import librosa
 import numpy as np
 import pandas as pd
 import soundfile as sf
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Dict
 
 import matplotlib.image as mpimg
 from matplotlib import pyplot as plt
@@ -74,14 +74,17 @@ def load_stim_info_from_csv(trial_id:int, df: pd.DataFrame) -> dict:
 
     stim_info = {
         "stim_duration": stim_duration,
+        "stim_name": analysis_parsed['analysis']['stim_name'],
+        'stim_onsets_input': analysis_parsed['analysis']['output']['stim_onsets_input'],
+        'stim_onsets_detected': analysis_parsed['analysis']['output']['stim_onsets_detected'],
+        'markers_onsets_input': analysis_parsed['analysis']['output']['markers_onsets_input'],
+        'markers_onsets_detected': analysis_parsed['analysis']['output']['markers_onsets_detected'],
         "stim_onsets": [],
         "stim_shifted_onsets": [],
         "onset_is_played": [],
-        "markers_onsets": analysis_parsed['analysis']['output']['markers_onsets_input'],
-        "stim_name": analysis_parsed['analysis']['stim_name'],
     }
 
-    return stim_info
+    return stim_info, analysis_parsed
 
 
 def extract_trial_id_from_filename(audio_fname: str) -> int:
@@ -136,11 +139,13 @@ def convert_and_save_audio(
         data = librosa.resample(data, orig_sr=fs, target_sr=target_sr)
         fs = target_sr
     
+    
     # Save converted audio
     sf.write(output_path, data, fs, subtype='PCM_16')
     # print(f"WAV converted and saved to {os.path.dirname(output_path)}")
     
     return data, fs
+
 
 
 def setup_participant_directories(
@@ -171,13 +176,18 @@ def setup_participant_directories(
     output_participant_dir = os.path.join(output_dir, choose_sub_dir, f"participant_{choose_participant_id}")
     
     if not os.path.exists(participant_dir):
-        raise ValueError(
-            f"Participant directory does not exist: {participant_dir}. "
-            f"Choose another participant id."
-        )
+        print(f"Source participant directory does not exist: {participant_dir}.")
+        return None, None, None
+        
+        # raise ValueError(
+        #     f"Participant directory does not exist: {participant_dir}. "
+        #     f"Choose another participant id."
+        # )
     
     participant_audio_fnames = [f for f in os.listdir(participant_dir) if f.endswith('.wav')]
-    os.makedirs(output_participant_dir, exist_ok=True)
+    
+    # if not os.path.exists(output_participant_dir):
+    #     os.makedirs(output_participant_dir, exist_ok=True)
     
     return participant_dir, output_participant_dir, participant_audio_fnames
 
@@ -285,7 +295,7 @@ def run_repp_analysis_for_participant(
             recording_path,
             title_plot,
             plot_path,
-            stim_info=stim_info,
+            stim_info=stim_info[0],
             config=config
         )
         
@@ -301,9 +311,10 @@ def run_repp_analysis_for_participant(
             'recording_basename': recording_basename,
             'extracted_onsets': extracted_onsets,
             'stats': stats,
-            'output': output
+            'output': output,
+
         })
-    
+        
     return results
 
 

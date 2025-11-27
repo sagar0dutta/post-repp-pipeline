@@ -5,6 +5,8 @@
 *.wav
 *png
 *.pkl
+*.csv
+*.zip
 
 *.ipynb_checkpoints
 *.pyc

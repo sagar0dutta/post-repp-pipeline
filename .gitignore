@@ -3,7 +3,7 @@
 
 *.json
 *.wav
-*png
+*.png
 *.pkl
 *.csv
 *.zip
@@ -14,3 +14,4 @@
 sms_tapping.ipynb
 beat_finding_bkp.ipynb
 post_repp_testing.ipynb
+Plotting-rainer.ipynb

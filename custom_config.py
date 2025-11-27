@@ -61,3 +61,94 @@ parameters = {  # Global parameters for sms experiments
     }
 
 sms_tapping = ConfigUpdater(parameters)
+
+
+def get_config_for_recording(participant_id, trial_id, choose_sub_dir=None):
+    """
+    Return config parameters based on participant and recordings.
+    """
+    base_config = sms_tapping
+    
+    ### Task 1
+    participant_ids_06 = [12, 26]
+    
+    trial_ids_04 = [237]
+    trial_ids_06 = [89,91,90,93,151,152,154,153,155,215,235,236,239,
+                    240,238,450,491,492,490,489,487,510,511,509,508,
+                    513,512]
+    trial_ids_08 = [488]
+    
+    ### Task 2
+    participant_ids_05_t2 = [11]
+    participant_ids_08_t2 = [8]
+    participant_ids_06_t2 = [12, 26, 24, 29]
+    trial_ids_06_t2 = [306, 413, 416, 415]
+    
+    if participant_id in participant_ids_06 and choose_sub_dir == "Task 1":
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.06],
+            'TAPPING_RANGE': [200, 450],
+            'MARKERS_MAX_ERROR': 35,
+        }
+    
+    elif trial_id in trial_ids_04 and choose_sub_dir == "Task 1":
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.04],
+            'TAPPING_RANGE': [200, 450],
+            'MARKERS_MAX_ERROR': 35,
+        }
+    
+    elif trial_id in trial_ids_06 and choose_sub_dir == "Task 1":
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.06],
+            'TAPPING_RANGE': [200, 450],
+            'MARKERS_MAX_ERROR': 35,
+        }
+    
+    
+    elif trial_id in trial_ids_08 and choose_sub_dir == "Task 1":
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.08],
+            'TAPPING_RANGE': [200, 450],
+            'MARKERS_MAX_ERROR': 35,
+        }
+        
+    ### Task 2   
+    elif participant_id in participant_ids_05_t2 and choose_sub_dir == "Task 2":
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.05],
+            'TAPPING_RANGE': [200, 450],
+            'MARKERS_MAX_ERROR': 35,
+        }    
+    
+    elif participant_id in participant_ids_06_t2 and choose_sub_dir == "Task 2":
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.06],
+            'TAPPING_RANGE': [200, 450],
+            'MARKERS_MAX_ERROR': 35,
+        }
+    
+    elif participant_id in participant_ids_08_t2 and choose_sub_dir == "Task 2":
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.08],
+            'TAPPING_RANGE': [200, 450],
+            'MARKERS_MAX_ERROR': 35,
+        }
+    
+    elif trial_id in trial_ids_06_t2 and choose_sub_dir == "Task 2":
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.06],
+            'TAPPING_RANGE': [200, 450],
+            'MARKERS_MAX_ERROR': 35,
+        }
+    
+    
+    
+    else:  #  default
+        overrides = {
+            'EXTRACT_THRESH': [0.12, 0.03],
+            'TAPPING_RANGE': [200, 400],
+            'MARKERS_MAX_ERROR': 33,
+        }
+    
+    return ConfigUpdater.create_config(base_config, overrides)

@@ -221,8 +221,6 @@ def align_onsets_beat_detection(        # supporting functions from Repp v1.3.0
     return aligned_onsets
 
  
-    
-
 
 def compute_matched_onsets(
     stim_raw: np.ndarray,
@@ -892,23 +890,45 @@ def do_plot_beat_detection(title_plot, audio_signals, aligned_onsets, analysis, 
     if len(R_clean) > 0:
         plt.plot(tt, R_clean, color=colours[1], linewidth=1.2, label='Filtered tapping')
     
-    # Add detected tap markers (convert from ms to seconds)
-    if len(tap_onsets) > 0 and len(R_clean) > 0:
-        mmx = np.max(R_clean) * 0.8
-        plt.scatter(tap_onsets / 1000.0, [mmx] * len(tap_onsets), 
-                   color=colours[2], s=40, marker='+', zorder=5, label='Detected taps')
     
     # Add detected marker indicators (if available)
     if len(markers_detected) > 0 and len(R_clean) > 0:
+        # mmx_markers = config.EXTRACT_THRESH[0]
         mmx_markers = np.max(R_clean) * 0.6
         plt.scatter(markers_detected / 1000.0, [mmx_markers] * len(markers_detected), 
-                   color=colours[4], s=40, marker='s', zorder=5, label='Detected markers')
+                   color=colours[4], s=40, marker='x', zorder=5, label='Detected markers')
+        
+    # Add detected tap markers (convert from ms to seconds)
+    if len(tap_onsets) > 0 and len(R_clean) > 0:
+        # mmx = config.EXTRACT_THRESH[1]
+        mmx = np.max(R_clean) * 0.8
+        plt.scatter(tap_onsets / 1000.0, [mmx] * len(tap_onsets), 
+                   color=colours[2], s=40, marker='+', zorder=5, label='Detected taps')
+        
     
-    plt.title(f'{title_plot}: Beat Detection Analysis', fontsize=16, fontweight='bold')
+    # plt.xlim(59, 61)
+    plt.title(f'Beat Detection Analysis | {title_plot}', fontsize=14, fontweight='bold')
     plt.xlabel('Time (seconds)')
     plt.ylabel('Amplitude')
+    plt.axhline(config.EXTRACT_THRESH[0], color=colours[4], linestyle='--', linewidth=0.8)
+    plt.axhline(config.EXTRACT_THRESH[1], color=colours[2], linestyle='--', linewidth=0.8)
     plt.legend(loc='lower right')
     plt.grid(True, alpha=0.3)
+    
+    info_text = (
+        f"EXTRACT_THRESH: [{config.EXTRACT_THRESH[0]}, {config.EXTRACT_THRESH[1]}]\n"
+        f"MARKERS_MAX_ERROR: {config.MARKERS_MAX_ERROR}"
+    )
+
+    plt.text(
+        0.05, 0.05,
+        info_text,
+        transform=plt.gca().transAxes,
+        fontsize=10,
+        bbox=dict(facecolor='white',alpha=0.7, edgecolor='black')
+    )
+
+    
     
     # 2. Marker detection analysis (top row, column 3)
     plt.subplot(2, 3, 3)

@@ -84,6 +84,8 @@ def get_config_for_recording(participant_id, trial_id, choose_sub_dir=None):
     participant_ids_06_t2 = [12, 26, 24, 29]
     trial_ids_06_t2 = [306, 413, 416, 415]
     
+    
+    ### Task 1
     if participant_id in participant_ids_06 and choose_sub_dir == "Task 1":
         overrides = {
             'EXTRACT_THRESH': [0.12, 0.06],
